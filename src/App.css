@@ -1,38 +1,117 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  font-family: sans-serif;
+  background-color: #f9f9f9; /* Light background */
+}
+
+.chat-header {
+  padding: 20px;
+  background-color: #e0e0e0; /* Lighter header background */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc; /* Header border */
+}
+
+.chat-header h1 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333; /* Darker header text */
+}
+
+.ip-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0; /* Chat box background */
+  border-radius: 8px;
+  margin: 10px;
+  padding-bottom: 30px; /* Add padding at the bottom for scroll */
+}
+
+.message {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 20px; /* Rounded message bubbles */
+  max-width: 80%;
+  clear: both; /* Prevent message overlap */
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #007bff; /* Blue for user messages */
+  color: white;
+  float: right; /* Align to right */
+}
+
+.bot-message {
+  align-self: flex-start;
+  background-color: #ffffff; /* White for bot messages */
+  color: black;
+  border: 1px solid #ddd; /* Light border for bot messages */
+  float: left; /* Align to left */
+}
+
+.input-box {
+  display: flex;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9; /* Match container background */
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 25px; /* Rounded input */
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+.send-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 50%;
+  padding: 12px; /* Slightly larger send button */
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: white; /* Icon color - if using text */
 }
 
-.App-link {
-  color: #61dafb;
+.send-button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.send-button img {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.error-message {
+  background-color: #ffdddd;
+  color: #8b0000;
+  border: 1px solid #8b0000;
+}
+
+.error-display {
+  background-color: #fce5e5;
+  color: #d9534f;
+  padding: 10px;
+  margin: 0 10px 10px 10px;
+  border-radius: 4px;
+  border: 1px solid #d9534f;
 }
