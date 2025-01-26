@@ -1,31 +1,27 @@
+/* App.css - No changes needed from the previous CSS, but including for completeness */
 .container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  font-family: sans-serif;
-  background-color: #f9f9f9; /* Light background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6;
 }
 
 .chat-header {
   padding: 20px;
-  background-color: #e0e0e0; /* Lighter header background */
+  background-color: #ffffff;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #ccc; /* Header border */
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .chat-header h1 {
   margin: 0;
-  font-size: 1.5em;
-  color: #333; /* Darker header text */
-}
-
-.ip-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-left: 10px;
+  font-size: 1.8em;
+  color: #333;
+  font-weight: 600;
 }
 
 .chat-box {
@@ -34,84 +30,173 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background-color: #f0f0f0; /* Chat box background */
-  border-radius: 8px;
-  margin: 10px;
-  padding-bottom: 30px; /* Add padding at the bottom for scroll */
+  background-color: #edf2f7;
+  border-radius: 10px;
+  margin: 20px;
+  padding-bottom: 30px;
+  box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+  /* Style for markdown content inside chat-box */
+  & > * { /* Targets direct children of .chat-box which are ReactMarkdown outputs */
+      margin-bottom: 10px; /* Add spacing between markdown elements */
+  }
+  & > ul, & > ol {
+      padding-left: 20px; /* Indent lists */
+  }
+  & > p { /* Style paragraphs */
+      margin-bottom: 12px;
+      line-height: 1.5;
+  }
+  & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 { /* Style headers */
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+  }
+  & > h1 { font-size: 1.6em; }
+  & > h2 { font-size: 1.4em; }
+  & > h3 { font-size: 1.2em; }
+  & > h4 { font-size: 1.1em; }
+  & > h5 { font-size: 1em; }
+  & > h6 { font-size: 0.9em; }
+
+  & > pre { /* Style code blocks */
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 10px 15px;
+      border-radius: 8px;
+      overflow-x: auto; /* Enable horizontal scrolling for long code lines */
+      font-family: monospace, monospace; /* Monospace font for code */
+      margin-bottom: 12px;
+  }
+
+   & > a { /* Style links */
+      color: #007bff;
+      text-decoration: none;
+  }
+
+  & > a:hover {
+      text-decoration: underline;
+  }
+
+   & > blockquote { /* Style blockquotes */
+      border-left: 3px solid #ccc;
+      padding-left: 15px;
+      margin: 10px 0;
+      font-style: italic;
+      color: #777;
+  }
 }
 
+
 .message {
-  padding: 10px 15px;
+  padding: 12px 20px;
   margin-bottom: 10px;
-  border-radius: 20px; /* Rounded message bubbles */
+  border-radius: 25px;
   max-width: 80%;
-  clear: both; /* Prevent message overlap */
+  clear: both;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
 .user-message {
   align-self: flex-end;
-  background-color: #007bff; /* Blue for user messages */
+  background-color: #007bff;
   color: white;
-  float: right; /* Align to right */
+  float: right;
+  background-image: linear-gradient(to right, #007bff, #0056b3);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .bot-message {
   align-self: flex-start;
-  background-color: #ffffff; /* White for bot messages */
-  color: black;
-  border: 1px solid #ddd; /* Light border for bot messages */
-  float: left; /* Align to left */
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  float: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+  /* Adjust styles for markdown content within bot-message if needed */
+  & > * { /* Targets direct children of ReactMarkdown inside .bot-message */
+      margin-bottom: 0; /* Reset default margins if necessary */
+  }
+}
+
+.loading-message {
+  align-self: flex-start;
+  background-color: #f0f0f0;
+  color: #777;
+  border: 1px solid #e0e0e0;
+  float: left;
+  font-style: italic;
 }
 
 .input-box {
   display: flex;
   padding: 20px;
-  border-top: 1px solid #ccc;
-  background-color: #f9f9f9; /* Match container background */
+  border-top: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 -1px 2px rgba(0,0,0,0.05);
 }
 
 .message-input {
   flex: 1;
-  padding: 10px;
+  padding: 12px 15px;
   border: 1px solid #ccc;
-  border-radius: 25px; /* Rounded input */
+  border-radius: 30px;
   margin-right: 10px;
   font-size: 1em;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+  transition: border-color 0.2s ease-in-out;
+}
+
+.message-input:focus {
+  border-color: #007bff;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06), 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
 .send-button {
   background-color: #007bff;
   border: none;
   border-radius: 50%;
-  padding: 12px; /* Slightly larger send button */
+  padding: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white; /* Icon color - if using text */
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .send-button:hover {
   background-color: #0056b3;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15), 0 2px 3px rgba(0,0,0,0.3);
+}
+
+.send-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.15);
 }
 
 .send-button img {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: white;
 }
 
 .error-message {
-  background-color: #ffdddd;
-  color: #8b0000;
-  border: 1px solid #8b0000;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 25px;
 }
 
 .error-display {
   background-color: #fce5e5;
   color: #d9534f;
-  padding: 10px;
-  margin: 0 10px 10px 10px;
-  border-radius: 4px;
+  padding: 12px;
+  margin: 10px 20px 10px 20px;
+  border-radius: 8px;
   border: 1px solid #d9534f;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }

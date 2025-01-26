@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import sendIcon from './assets/send.svg';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 function App() {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
-    const [serverIP, setServerIP] = useState(`${window.location.hostname}:3000`); // Default to hostname:3000
     const messagesEndRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null); // For server errors
+    const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
         scrollToBottom();
@@ -22,20 +23,16 @@ function App() {
         setInput(event.target.value);
     };
 
-    const handleIPChange = (event) => {
-        setServerIP(event.target.value);
-    };
-
     const sendMessage = async () => {
         if (!input.trim()) return;
-        setErrorMessage(null); // Clear any previous error
+        setErrorMessage(null);
         setMessages(prevMessages => [...prevMessages, { text: input, sender: 'user' }]);
         const currentInput = input;
         setInput('');
         setIsLoading(true);
 
         try {
-            const response = await fetch(`http://${serverIP}/prompt`, {
+            const response = await fetch(`http://52.140.2.134:3000/prompt`, { // Hardcoded IP
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: currentInput }),
@@ -54,13 +51,13 @@ function App() {
                 const errorData = await response.json();
                 const errorText = errorData.message || "Error sending request";
                 setMessages(prevMessages => [...prevMessages, { text: errorText, sender: 'bot', isError: true }]);
-                setErrorMessage(errorText); // Set error message for display above chat
+                setErrorMessage(errorText);
                 console.error('Failed to send message:', response.statusText, errorData);
             }
         } catch (error) {
             setIsLoading(false);
-            setMessages(prevMessages => [...prevMessages, { text: "Network error, check server IP.", sender: 'bot', isError: true }]);
-            setErrorMessage("Network error, check server IP.");
+            setMessages(prevMessages => [...prevMessages, { text: "Network error, check server connection.", sender: 'bot', isError: true }]);
+            setErrorMessage("Network error, check server connection.");
             console.error('Network error:', error);
         }
     };
@@ -75,25 +72,25 @@ function App() {
         <div className="container">
             <div className="chat-header">
                 <h1>AI Home Assistant</h1>
-                <input
-                    type="text"
-                    placeholder="Server IP:Port"
-                    value={serverIP}
-                    onChange={handleIPChange}
-                    className="ip-input"
-                />
             </div>
-             {errorMessage && <div className="error-display">{errorMessage}</div>} {/* Error display */}
+             {errorMessage && <div className="error-display">{errorMessage}</div>}
             <div className="chat-box">
                 {messages.map((message, index) => (
                     <div
                         key={index}
                         className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'} ${message.isError ? 'error-message' : ''}`}
                     >
-                        {message.text}
+                        {message.sender === 'bot' ? (
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]} // Enable GitHub Flavored Markdown
+                                children={message.text}
+                            />
+                        ) : (
+                            message.text
+                        )}
                     </div>
                 ))}
-                {isLoading && <div className="bot-message">Loading...</div>}
+                {isLoading && <div className="bot-message loading-message">Loading...</div>}
                 <div ref={messagesEndRef}></div>
             </div>
             <div className="input-box">
@@ -105,7 +102,7 @@ function App() {
                     onKeyDown={handleKeyDown}
                     className="message-input"
                 />
-                <button className="send-button" onClick={sendMessage} disabled={isLoading}> {/* Disable button when loading */}
+                <button className="send-button" onClick={sendMessage} disabled={isLoading}>
                     <img src={sendIcon} alt="send" />
                 </button>
             </div>
